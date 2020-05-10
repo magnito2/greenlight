@@ -1,0 +1,10 @@
+<%= form_with model: @school do |form| %>
+<div class="form-group">
+  <%= form.label :name, class: "form-label" %>
+  <%= form.text_field :name, class: "form-control #{form_is_invalid?(@school, :name)}" %>
+  <div class="invalid-feedback d-block"><%= @school.errors.full_messages_for(:name).first %></div>
+</div>
+<div class="card-footer px-0 pb-0">
+  <%= form.submit "Create New School", class: "btn btn-primary btn-block signin-button" %>
+</div>
+<% end %>
