@@ -4,8 +4,11 @@ default: &default
 
 development:
   <<: *default
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: <%= ENV['DB_ADAPTER'] || 'sqlite3' %>
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] || 'db/development.sqlite3' %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 test:
   <<: *default
