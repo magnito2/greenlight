@@ -17,6 +17,7 @@
 # with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 
 Rails.application.routes.draw do
+  resources :schools
   get '/health_check', to: 'health_check#all'
 
   # Error routes.
