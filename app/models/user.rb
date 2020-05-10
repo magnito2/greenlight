@@ -284,4 +284,8 @@ class User < ApplicationRecord
     end
   end
 
+  # in order to check if the admission number is required.
+  def is_student?
+    has_role? "student"
+  end
 end
