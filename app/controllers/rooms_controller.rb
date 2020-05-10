@@ -47,6 +47,8 @@ class RoomsController < ApplicationController
     @room.owner = current_user
     @room.room_settings = create_room_settings_string(room_params)
 
+    @room.school = current_user.school if !current_user.school.blank?
+
     # Save the room and redirect if it fails
     return redirect_to current_user.main_room, flash: { alert: I18n.t("room.create_room_error") } unless @room.save
 
@@ -65,6 +67,9 @@ class RoomsController < ApplicationController
     @anyone_can_start = JSON.parse(@room[:room_settings])["anyoneCanStart"]
     @room_running = room_running?(@room.bbb_id)
     @shared_room = room_shared_with_user
+
+    @school_rooms = current_user.school.rooms if !current_user.school.blank?
+    @school = current_user.school if !current_user.school.blank?
 
     # If its the current user's room
     if current_user && (@room.owned_by?(current_user) || @shared_room)
