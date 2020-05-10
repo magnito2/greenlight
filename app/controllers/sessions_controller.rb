@@ -59,6 +59,7 @@ class SessionsController < ApplicationController
     check_if_twitter_account(true)
 
     @user = User.new
+    @schools = School.all
   end
 
   # POST /users/login
