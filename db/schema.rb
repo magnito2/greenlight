@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_144841) do
+ActiveRecord::Schema.define(version: 2020_05_10_072103) do
 
-  create_table "features", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "features", id: :serial, force: :cascade do |t|
     t.integer "setting_id"
     t.string "name", null: false
     t.string "value"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.index ["setting_id"], name: "index_features_on_setting_id"
   end
 
-  create_table "invitations", force: :cascade do |t|
+  create_table "invitations", id: :serial, force: :cascade do |t|
     t.string "email", null: false
     t.string "provider", null: false
     t.string "invite_token"
@@ -37,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "name"
     t.string "value", default: ""
     t.boolean "enabled", default: false
-    t.integer "role_id"
+    t.bigint "role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["role_id"], name: "index_role_permissions_on_role_id"
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.index ["priority", "provider"], name: "index_roles_on_priority_and_provider", unique: true
   end
 
-  create_table "rooms", force: :cascade do |t|
+  create_table "rooms", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
     t.string "uid"
@@ -75,16 +78,27 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "attendee_pw"
     t.string "access_code"
     t.boolean "deleted", default: false, null: false
+    t.bigint "school_id"
     t.index ["bbb_id"], name: "index_rooms_on_bbb_id"
     t.index ["deleted"], name: "index_rooms_on_deleted"
     t.index ["last_session"], name: "index_rooms_on_last_session"
     t.index ["name"], name: "index_rooms_on_name"
+    t.index ["school_id"], name: "index_rooms_on_school_id"
     t.index ["sessions"], name: "index_rooms_on_sessions"
     t.index ["uid"], name: "index_rooms_on_uid"
     t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
-  create_table "settings", force: :cascade do |t|
+  create_table "schools", force: :cascade do |t|
+    t.string "uid"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_schools_on_name"
+    t.index ["uid"], name: "index_schools_on_uid"
+  end
+
+  create_table "settings", id: :serial, force: :cascade do |t|
     t.string "provider", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,15 +106,15 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
   end
 
   create_table "shared_accesses", force: :cascade do |t|
-    t.integer "room_id"
-    t.integer "user_id"
+    t.bigint "room_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_shared_accesses_on_room_id"
     t.index ["user_id"], name: "index_shared_accesses_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.integer "room_id"
     t.string "provider"
     t.string "uid"
@@ -120,12 +134,15 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "activation_digest"
     t.datetime "activated_at"
     t.boolean "deleted", default: false, null: false
+    t.string "admission_number"
+    t.bigint "school_id"
     t.index ["created_at"], name: "index_users_on_created_at"
     t.index ["deleted"], name: "index_users_on_deleted"
     t.index ["email"], name: "index_users_on_email"
     t.index ["password_digest"], name: "index_users_on_password_digest", unique: true
     t.index ["provider"], name: "index_users_on_provider"
     t.index ["room_id"], name: "index_users_on_room_id"
+    t.index ["school_id"], name: "index_users_on_school_id"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
@@ -136,4 +153,9 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  add_foreign_key "role_permissions", "roles"
+  add_foreign_key "rooms", "schools"
+  add_foreign_key "shared_accesses", "rooms"
+  add_foreign_key "shared_accesses", "users"
+  add_foreign_key "users", "schools"
 end
