@@ -56,6 +56,24 @@
                                     </div>
                                 <% end %>
                             </div>
+
+                            <% if !@shool.blank? %>
+                            <hr class="mt-0 mb-0">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                            <ul class="list-group w-75 text-center">
+                                <li class="list-group-item active">Rooms in <%= @school.name %></li>
+                                <% @school_rooms.each do |room| %>
+                                    <%= link_to room_path(room), class: "list-group-item list-group-item-action dropdown-item"  do %>
+                                        <%= room.owner.name + " " + room.name %>
+                                    <% end %>
+                                <% end %>
+                                <% if @school_rooms.count == 0 %>
+                                    <li class="list-group-item">There are no rooms created for the school</li>
+                                <% end %>
+                            </ul>
+                            </div>
+                            <% end %>
+
                             <hr class="mt-0 mb-0">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center">
                             <ul class="list-group w-75 text-center">
