@@ -21,7 +21,7 @@ require 'bbb_api'
 class User < ApplicationRecord
   include Deleteable
 
-  attr_accessor :reset_token, :activation_token
+  attr_accessor :reset_token, :activation_token, :user_role
   after_create :setup_user
 
   before_save { email.try(:downcase!) }
@@ -33,6 +33,8 @@ class User < ApplicationRecord
   belongs_to :main_room, class_name: 'Room', foreign_key: :room_id, required: false
 
   has_and_belongs_to_many :roles, join_table: :users_roles
+
+  belongs_to :school
 
   validates :name, length: { maximum: 256 }, presence: true
   validates :provider, presence: true
@@ -47,6 +49,9 @@ class User < ApplicationRecord
   validates :accepted_terms, acceptance: true,
                              unless: -> { !greenlight_account? || !Rails.configuration.terms }
 
+  validates :user_role, presence: true, inclusion: {in: %w(student teacher)}
+
+  validates :admission_number, presence: true, numericality: { only_integer: true }, if: :is_student?
   # We don't want to require password validations on all accounts.
   has_secure_password(validations: false)
 
@@ -265,6 +270,7 @@ class User < ApplicationRecord
     role_provider = Rails.configuration.loadbalanced_configuration ? provider : "greenlight"
 
     Role.create_default_roles(role_provider) if Role.where(provider: role_provider).count.zero?
+    add_role(user_role) if !user_role.blank?
     add_role(:user) if roles.blank?
   end
 
@@ -277,4 +283,5 @@ class User < ApplicationRecord
       end
     end
   end
+
 end
