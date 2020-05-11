@@ -19,6 +19,9 @@ else
   bundle exec rake db:schema:load
 fi
 
+echo ">>> Seeding the Database"
+bundle exec rake db:seed
+
 bundle exec rake assets:precompile
 
 exec bundle exec puma -C config/puma.rb
