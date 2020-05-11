@@ -3,7 +3,7 @@ FROM ruby:2.5.1-alpine AS base
 # Set a variable for the install location.
 ARG RAILS_ROOT=/usr/src/app
 # Set Rails environment.
-ENV RAILS_ENV production
+ENV RAILS_ENV=production
 ENV BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
 
 # Make the directory and set as working.
