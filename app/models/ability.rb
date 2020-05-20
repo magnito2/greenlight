@@ -26,6 +26,7 @@ class Ability
       can :manage, :all
     else
       highest_role = user.highest_priority_role
+
       if highest_role.get_permission("can_edit_site_settings")
         can [:site_settings, :update_settings, :coloring, :registration_method], :admin
       end
@@ -39,12 +40,24 @@ class Ability
              :approve, :invite, :reset, :undelete, :merge_user], :admin
       end
 
+      if highest_role.get_permission("can_manage_school")
+        can [:index, :edit_user,:ban_user, :unban_user, :approve, :invite,
+           :reset, :undelete, :merge_user], [:admin, :school]
+      end
+
+      can :manage, School do |school|
+        highest_role.get_permission("can_manage_school") && user.school_id == school.id
+      end
+
       can [:server_recordings, :server_rooms], :admin if highest_role.get_permission("can_manage_rooms_recordings")
 
       if !highest_role.get_permission("can_edit_site_settings") && !highest_role.get_permission("can_edit_roles") &&
-         !highest_role.get_permission("can_manage_users") && !highest_role.get_permission("can_manage_rooms_recordings")
+         !highest_role.get_permission("can_manage_users") && !highest_role.get_permission("can_manage_rooms_recordings") &&
+         !highest_role.get_permission("can_manage_school")
+
         cannot :manage, AdminsController
       end
+
     end
   end
 end
