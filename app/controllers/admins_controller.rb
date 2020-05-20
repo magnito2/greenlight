@@ -46,6 +46,21 @@ class AdminsController < ApplicationController
     @pagy, @users = pagy(manage_users_list)
   end
 
+  # GET /admins/school_users
+  def school_users
+    # Initializa the data manipulation variables
+    @search = params[:search] || ""
+    @order_column = params[:column] && params[:direction] != "none" ? params[:column] : "created_at"
+    @order_direction = params[:direction] && params[:direction] != "none" ? params[:direction] : "DESC"
+
+    @role = params[:role] ? Role.find_by(name: params[:role], provider: @user_domain) : nil
+    @tab = params[:tab] || "active"
+
+    @user_list = merge_user_list.where(school_id: current_user.school_id)
+
+    @pagy, @users = pagy(manage_users_list.where(school_id: current_user.school_id))
+  end
+
   # GET /admins/site_settings
   def site_settings
   end
@@ -309,7 +324,7 @@ class AdminsController < ApplicationController
   # Verifies that admin is an administrator of the user in the action
   def verify_admin_of_user
     redirect_to admins_path,
-      flash: { alert: I18n.t("administrator.flash.unauthorized") } unless current_user.admin_of?(@user, "can_manage_users")
+      flash: { alert: I18n.t("administrator.flash.unauthorized") } unless current_user.admin_of?(@user, "can_manage_users") || current_user.school_admin_of?(@user, "can_manage_school")
   end
 
   # Creates the invite if it doesn't exist, or updates the updated_at time if it does
