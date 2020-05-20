@@ -19,10 +19,13 @@
 class ApplicationController < ActionController::Base
   include BbbServer
 
+  skip_before_action :verify_authenticity_token
+  protect_from_forgery prepend: true, with: :exceptions
+
   before_action :redirect_to_https, :set_user_domain, :set_user_settings, :maintenance_mode?, :migration_error?,
     :user_locale, :check_admin_password, :check_user_role
 
-  protect_from_forgery with: :exceptions
+  # protect_from_forgery with: :exceptions
 
   # Retrieves the current user.
   def current_user
