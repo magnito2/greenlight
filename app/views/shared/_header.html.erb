@@ -27,7 +27,7 @@
       <div class="d-flex ml-auto">
         <% if current_user %>
 
-          <% if current_user.has_role? :super_admin %>
+          <% if current_user.has_role? :super_admin or current_user.has_role? :admin %>
             <% admins_page = params[:controller] == "admins" && params[:action] == "index" ? "active" : "" %>
             <%= link_to admins_path, class: "px-3 mx-1 mt-1 header-nav #{admins_page}" do %>
               <i class="fas fa-home pr-1 "></i><span class="d-none d-sm-inline-block"><%= t("header.dropdown.home") %></span>
@@ -78,6 +78,10 @@
               <% elsif highest_role.get_permission("can_edit_roles")%>
                 <%= link_to admin_roles_path, class: "dropdown-item" do %>
                   <i class="dropdown-icon fas fa-user-tie mr-3"></i><%= t("header.dropdown.account_settings") %>
+                <% end %>
+              <% elsif highest_role.get_permission("can_manage_school")%>
+                <%= link_to admins_path, class: "dropdown-item" do %>
+                  <i class="dropdown-icon fas fa-user-tie mr-3"></i>Admin Dashboard
                 <% end %>
               <% end %>
               <div class="dropdown-divider"></div>
