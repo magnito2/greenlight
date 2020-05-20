@@ -300,7 +300,7 @@ class RoomsController < ApplicationController
 
   # Find the room from the uid.
   def find_room
-    @room = Room.includes(:owner).find_by!(uid: params[:room_uid])
+    @room = Room.includes(:owner).find_by(uid: params[:room_uid])
   end
 
   # Ensure the user either owns the room or is an admin of the room owner or the room is shared with him
@@ -335,7 +335,7 @@ class RoomsController < ApplicationController
 
   # Check to make sure the room owner is not pending or banned
   def verify_room_owner_valid
-    redirect_to root_path, alert: t("room.owner_banned") if @room.owner.has_role?(:pending) || @room.owner.has_role?(:denied)
+    redirect_to root_path, alert: t("room.owner_banned") if @room.blank? || @room.owner.has_role?(:pending) || @room.owner.has_role?(:denied)
   end
 
   def verify_user_not_admin
