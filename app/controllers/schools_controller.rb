@@ -1,16 +1,22 @@
 class SchoolsController < ApplicationController
+  include Pagy::Backend
+
   before_action :set_school, only: [:show, :edit, :update, :destroy]
-  before_action :verify_super_admin
+  authorize_resource class: false
 
   # GET /schools
   # GET /schools.json
   def index
+    @school = current_user.school
+    return redirect_to @school unless current_user.highest_priority_role.name == "super_admin"
     @schools = School.all
   end
 
   # GET /schools/1
   # GET /schools/1.json
   def show
+    @school = current_user.school
+    @pagy, @users = pagy(@school.users)
   end
 
   # GET /schools/new
