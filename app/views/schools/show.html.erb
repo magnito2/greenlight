@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-12">
       <div class="row">
-        <div class="col-7">
+        <div class="col-4">
           <div class="card">
             <div class="card-header">
               <h4 class="mt-2">View School</h4>
@@ -11,13 +11,51 @@
             <div class="card-body background">
               <h2 class="mb-3"><%= @school.name %></h2>
             </div>
+            <div class="card-footer">
+              <%= link_to 'Edit', edit_school_path(@school), class: "btn btn-outline-primary mt-2" %>
+              <%= link_to 'Back', schools_path, class: "btn btn-outline-primary mt-2"  %>
+            </div>
           </div>
         </div>
+
+        <div class="col-8">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="mt-2">Users from <%= @school.name %></h4>
+            </div>
+            <div class="card-body background">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a class="nav-link active" href="#" data-target="#all" data-toggle="tab">All</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" data-target="#students" data-toggle="tab">Students</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" data-target="#teachers" data-toggle="tab">Teachers</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="all">
+                  <%= render "users_table", users: @users %>
+                </div>
+                <div class="tab-pane fade in" id="students">
+                  <%= render "users_table", users: @users.with_role(:student) %>
+                </div>
+                <div class="tab-pane fade in" id="teachers">
+                  <%= render "users_table", users: @users.with_role(:teacher) %>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="float-right mt-4">
+                <%== pagy_bootstrap_nav(@pagy) %>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
-
-      <%= link_to 'Edit', edit_school_path(@school), class: "btn btn-outline-primary mt-2" %>
-      <%= link_to 'Back', schools_path, class: "btn btn-outline-primary mt-2"  %>
-
     </div>
   </div>
 </div>
