@@ -22,7 +22,11 @@ require 'bigbluebutton_api'
 describe Room, type: :model do
   before do
     @user = create(:user)
+    @school = create(:school)
+    @user.school = @school
     @room = @user.main_room
+    @room.school = @school
+    @room.save!
   end
 
   context 'validations' do
@@ -31,6 +35,10 @@ describe Room, type: :model do
 
   context 'associations' do
     it { should belong_to(:owner).class_name("User").with_foreign_key("user_id") }
+    xit { should belong_to(:school).class_name("School").with_foreign_key("school_id") }
+    it "has a relationship with school" do
+      expect(@room.school.id).to eq(@school.id)
+    end
   end
 
   context '#setup' do
