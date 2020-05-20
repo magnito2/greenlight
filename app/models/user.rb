@@ -49,7 +49,7 @@ class User < ApplicationRecord
   validates :accepted_terms, acceptance: true,
                              unless: -> { !greenlight_account? || !Rails.configuration.terms }
 
-  validates :user_role, presence: true, inclusion: {in: %w(student teacher)}
+  validates :user_role, inclusion: {in: %w(student teacher)}, on: :create
 
   validates :admission_number, presence: true, numericality: { only_integer: true }, if: :is_student?
   # We don't want to require password validations on all accounts.
@@ -174,6 +174,13 @@ class User < ApplicationRecord
     return has_correct_permission unless Rails.configuration.loadbalanced_configuration
     return id != user.id if has_role? :super_admin
     has_correct_permission && provider == user.provider && !user.has_role?(:super_admin)
+  end
+
+  def school_admin_of?(user, permission)
+    has_correct_permission = highest_priority_role.get_permission(permission) && id != user.id
+
+    return has_correct_permission && school_id == user.school_id unless has_role? :super_admin
+    return has_role? :super_admin
   end
 
   def self.digest(string)
