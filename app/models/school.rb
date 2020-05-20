@@ -5,6 +5,8 @@ class School < ApplicationRecord
   has_many :users
   has_many :rooms
 
+  validates :name, presence: true
+
   private
 
   # Generates a uid for the room.
