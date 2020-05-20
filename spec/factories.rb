@@ -19,6 +19,7 @@
 FactoryBot.define do
   factory :user do
     password = Faker::Internet.password(8)
+    user_role = %w(teacher student).sample
     provider { %w(google twitter).sample }
     uid { rand(10**8) }
     name { Faker::Name.first_name }
@@ -29,6 +30,14 @@ FactoryBot.define do
     accepted_terms { true }
     email_verified { true }
     activated_at { Time.zone.now }
+    school { create(:school) }
+    user_role { user_role }
+    admission_number { rand(10**5) if user_role == "student"}
+
+  end
+
+  factory :school do
+    name { "#{Faker::Games::Pokemon.location} #{%w(high secondary).sample} School" }
   end
 
   factory :room do
