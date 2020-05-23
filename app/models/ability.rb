@@ -42,7 +42,7 @@ class Ability
 
       if highest_role.get_permission("can_manage_school")
         can [:index, :edit_user,:ban_user, :unban_user, :approve, :invite,
-           :reset, :undelete, :merge_user], [:admin, :school]
+           :reset, :undelete, :merge_user, :change_user_role], [:admin, :school]
       end
 
       can :manage, School do |school|
