@@ -40,14 +40,14 @@
                     <%= link_to admin_edit_user_path(user_uid: user.uid), class: "dropdown-item" do %>
                       <i class="dropdown-icon fas fa-user-edit"></i> <%= t("administrator.users.settings.edit") %>
                     <% end %>
-                    <button class= "merge-user dropdown-item" data-path="<%= merge_user_path(user_uid: user.uid) %>" data-info="<%= user.slice(:name, :email, :uid).to_json %>" data-toggle="modal" data-target="#mergeUserModal">
-                      <i class="dropdown-icon fas fa-user-friends"></i> <%= t("administrator.users.settings.merge") %>
-                    </button>
                     <%= button_to admin_ban_path(user_uid: user.uid), class: "dropdown-item", "data-disable": "" do %>
                       <i class="dropdown-icon fas fa-lock"></i> <%= t("administrator.users.settings.ban") %>
                     <% end %>
                     <button class= "delete-user dropdown-item" data-path="<%= delete_user_path(user_uid: user.uid) %>" data-delete="temp-delete" data-toggle="modal" data-target="#deleteAccountModal">
                       <i class="dropdown-icon fas fa-user-minus"></i> <%= t("administrator.users.settings.delete") %>
+                    </button>
+                    <button class= "change-user-role dropdown-item" data-path="<%= change_user_role_path(user_uid: user.uid) %>" data-toggle="modal" data-role="<%=user.highest_priority_role.name %>" data-target="#changeUserRoleModal">
+                      <i class="dropdown-icon fas fa-user-edit"></i> Edit role
                     </button>
                   <% end %>
                 </div>
@@ -60,3 +60,4 @@
   </table>
 </div>
 <%= render "shared/modals/delete_account_modal", delete_location: relative_root %>
+<%= render "shared/modals/change_user_role_modal", user_role_location: relative_root %>
