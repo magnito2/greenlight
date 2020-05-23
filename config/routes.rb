@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     get '/reset', to: 'admins#reset', as: :admin_reset
     post '/undelete', to: 'admins#undelete', as: :admin_undelete
     post '/merge/:user_uid', to: 'admins#merge_user', as: :merge_user
+    post '/change_user_role/:user_uid', to: 'admins#change_user_role', as: :change_user_role
     # Site Settings
     post '/update_settings', to: 'admins#update_settings', as: :admin_update_settings
     post '/registration_method', to: 'admins#registration_method', as: :admin_change_registration
