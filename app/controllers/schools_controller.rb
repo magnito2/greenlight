@@ -16,7 +16,7 @@ class SchoolsController < ApplicationController
   # GET /schools/1.json
   def show
     @school = current_user.school
-    @pagy, @users = pagy(@school.users)
+    @pagy, @users = pagy(@school.users.without_role(:super_admin))
   end
 
   # GET /schools/new
