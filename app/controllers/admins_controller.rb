@@ -24,7 +24,7 @@ class AdminsController < ApplicationController
   include Rolify
   include Populator
 
-  manage_users = [:edit_user, :promote, :demote, :ban_user, :unban_user, :approve, :reset, :merge_user]
+  manage_users = [:edit_user, :promote, :demote, :ban_user, :unban_user, :approve, :reset, :merge_user, :change_user_role]
   manage_deleted_users = [:undelete]
   authorize_resource class: false
   before_action :find_user, only: manage_users
@@ -106,11 +106,23 @@ class AdminsController < ApplicationController
   # POST /admins/unban/:user_uid
   def unban_user
     @user.remove_role :denied
-    @user.add_role :user
-
+    if @user.admission_number.blank?
+      @user.add_role :teacher
+    else
+      @user.add_role :student
+    end
     redirect_back fallback_location: admins_path, flash: { success: I18n.t("administrator.flash.unbanned") }
   end
 
+  # POST /admins/change_user_role/:user_uid
+  def change_user_role
+    role = params[:role]
+    
+    return redirect_back fallback_location: admins_path, flash: { alert: "Role not allowed" } unless role.in? %w(teacher student admin)
+    @user.roles = []
+    @user.add_role role
+    redirect_back fallback_location: admins_path, flash: { success: "User role changed to #{role}" }
+  end
   # POST /admins/approve/:user_uid
   def approve
     @user.remove_role :pending
