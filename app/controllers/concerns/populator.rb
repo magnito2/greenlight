@@ -37,7 +37,7 @@ module Populator
     initial_list = if current_user.has_role? :super_admin
       initial_user.where.not(id: current_user.id)
     else
-      initial_user.without_role(:super_admin).where.not(id: current_user.id)
+      initial_user.without_role(:super_admin).where.not(id: current_user.id).where(school_id: current_user.school_id)
     end
 
     if Rails.configuration.loadbalanced_configuration
@@ -88,8 +88,11 @@ module Populator
 
   # Returns a list of users that can merged into another user
   def merge_user_list
-    initial_list = User.where.not(uid: current_user.uid).without_role(:super_admin)
-
+    initial_list = if current_user.has_role? :super_admin
+      User.where.not(uid: current_user.uid).without_role(:super_admin)
+    else
+      User.where.not(uid: current_user.uid).without_role(:super_admin).where(school_id: current_user.school_id)
+    end
     return initial_list unless Rails.configuration.loadbalanced_configuration
     initial_list.where(provider: @user_domain)
   end
