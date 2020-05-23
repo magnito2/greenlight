@@ -1,0 +1,41 @@
+<%
+# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# This program is free software; you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free Software
+# Foundation; either version 3.0 of the License, or (at your option) any later
+# version.
+#
+# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+# You should have received a copy of the GNU Lesser General Public License along
+# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="modal fade" id="changeUserRoleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        <div class="card-body p-6">
+          <div class="card-title">
+            <h3 id="role-title">Change the role</h3>
+          </div>
+
+          <%= button_to user_role_location, params: {role: 'student'}, method: :post, id: "student-role", class: "btn btn-default my-1" do %>
+            Make Student
+          <% end %>
+          <%= button_to user_role_location, params: {role: 'teacher'}, method: :post, id: "teacher-role", class: "btn btn-default my-1" do %>
+            Make Teacher
+          <% end %>
+          <%= button_to user_role_location, params: {role: 'admin'}, method: :post, id: "admin-role", class: "btn btn-default my-1" do %>
+            Make Admin
+          <% end %>
+
+        </div>
+        <div class="card-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
