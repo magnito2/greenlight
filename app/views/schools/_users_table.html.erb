@@ -16,7 +16,7 @@
           <td><%= user.highest_priority_role.name %></td>
           <td>
             <% roles = user.roles().pluck(:name) %>
-            <% if !roles.include?("admin") %>
+            <% if !roles.include?("admin") || current_user.highest_priority_role.name == "super_admin" %>
               <div class="item-action dropdown">
                 <a href="javascript:void(0)" data-toggle="dropdown" class="icon">
                   <i class="fas fa-ellipsis-v px-4"></i>
