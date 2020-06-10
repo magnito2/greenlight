@@ -15,7 +15,7 @@ class SchoolsController < ApplicationController
   # GET /schools/1
   # GET /schools/1.json
   def show
-    @school = current_user.school
+    @school = current_user.school unless current_user.highest_priority_role.name == "super_admin"
     @pagy, @users = pagy(@school.users.without_role(:super_admin))
   end
 
