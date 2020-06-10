@@ -133,6 +133,9 @@
                               <button class= "delete-user dropdown-item" data-path="<%= delete_user_path(user_uid: user.uid) %>" data-delete="temp-delete" data-toggle="modal" data-target="#deleteAccountModal">
                                 <i class="dropdown-icon fas fa-user-minus"></i> <%= t("administrator.users.settings.delete") %>
                               </button>
+                              <button class= "change-user-role dropdown-item" data-path="<%= change_user_role_path(user_uid: user.uid) %>" data-toggle="modal" data-role="<%=user.highest_priority_role.name %>" data-target="#changeUserRoleModal">
+                                <i class="dropdown-icon fas fa-user-edit"></i> Edit role
+                              </button>
                             <% end %>
                           </div>
                         </div>
@@ -161,3 +164,4 @@
 <%= render "shared/modals/invite_user_modal" %>
 <%= render "shared/modals/delete_account_modal", delete_location: relative_root %>
 <%= render "shared/modals/merge_user_modal" %>
+<%= render "shared/modals/change_user_role_modal", user_role_location: relative_root %>
