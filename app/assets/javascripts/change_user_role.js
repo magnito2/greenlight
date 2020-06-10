@@ -19,7 +19,7 @@ $(document).on('turbolinks:load', function(){
   var action = $("body").data('action');
 
   // Only run on the schools page.
-  if (controller == "schools" && action == "show") {
+  if (controller == "schools" && action == "show" || controller == "admins" && action == "index") {
     // show the modal with the correct form action url
     $(".change-user-role").click(function(){
 
@@ -29,12 +29,12 @@ $(document).on('turbolinks:load', function(){
         $("#student-role").parent().attr("action", $(this).data("path"));
 
       role === "teacher" ? $("#teacher-role").parent().hide() :
-        $("#teacher-role").parent().attr("action", $(this).data("path"))
+        $("#teacher-role").parent().attr("action", $(this).data("path"));
 
       role === "admin" ? $("#admin-role").parent().hide() :
-        $("#admin-role").parent().attr("action", $(this).data("path"))
+        $("#admin-role").parent().attr("action", $(this).data("path"));
 
-      $("#role-title").text("Current Role is "+ role.charAt(0).toUpperCase())
+      $("#role-title").text("Current Role is "+ role.charAt(0).toUpperCase() + role.substring(1, role.length))
     })
   }
 })
