@@ -35,7 +35,11 @@ module Joiner
 
     @pagy, @public_recordings = pagy_array(pub_recs)
 
-    render :join
+    if @name.blank?
+      render :join
+    else
+      join_room(default_meeting_options)
+    end
   end
 
   # create or update cookie to track the three most recent rooms a user joined
