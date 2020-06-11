@@ -18,10 +18,10 @@
 <div id="cant-create-room-wrapper" class="background h-100 cant-create-room-wrapper">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
-            <div class="col-12">
+            <div class="col-12 pt-5">
                 <div class="row">
-                    <div class="col-5">
-                        <div class="card card-profile h-100">
+                    <div class="col-md-3 col-sm-12">
+                        <div class="card card-profile h-60">
                             <div class="card-header bg-primary h-50"></div>
                             <div class="card-body text-center">
                                 <% if current_user.image.blank? %>
@@ -36,25 +36,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-7">
+                    <div class="col-md-9 col-sm-12">
                         <div class="card h-100">
                             <div class="card-status bg-primary"></div>
                             <div class="card-header cant-create-rooms-title">
-                                <h3 class="card-title"><%= t("room.no_room.title") %></h3>
-                            </div>
-                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                                <p class="w-75"><%= t("room.no_room.description") %></p>
-                                <%= form_for(:join_room, url: join_room_path, html: {class: "w-75"}) do |f| %>
-                                    <div class="input-icon mb-2">
-                                        <span class="input-icon-addon">
-                                            <i class="fas fa-link"></i>
-                                        </span>
-                                        <%= f.text_field :url, class: "form-control", value: "", placeholder: t("room.no_room.placeholder"), required: "" %>
-                                    </div>
-                                    <div class="mt-4">
-                                        <%= f.submit t("room.no_room.go_to"), class:"btn btn-primary btn-block" %>
-                                    </div>
-                                <% end %>
+                                <h3 class="card-title"><%= @school.name %></h3>
                             </div>
 
                             <% if !@school.blank? %>
@@ -73,6 +59,21 @@
                             </ul>
                             </div>
                             <% end %>
+
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                                <p class="w-75"><%= t("room.no_room.description") %></p>
+                                <%= form_for(:join_room, url: join_room_path, html: {class: "w-75"}) do |f| %>
+                                    <div class="input-icon mb-2">
+                                        <span class="input-icon-addon">
+                                            <i class="fas fa-link"></i>
+                                        </span>
+                                        <%= f.text_field :url, class: "form-control", value: "", placeholder: t("room.no_room.placeholder"), required: "" %>
+                                    </div>
+                                    <div class="mt-4">
+                                        <%= f.submit t("room.no_room.go_to"), class:"btn btn-primary btn-block" %>
+                                    </div>
+                                <% end %>
+                            </div>
 
                             <hr class="mt-0 mb-0">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center">
