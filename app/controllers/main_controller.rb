@@ -22,5 +22,9 @@ class MainController < ApplicationController
   def index
     # Store invite token
     session[:invite_token] = params[:invite_token] if params[:invite_token] && invite_registration
+
+    if current_user
+      return redirect_to current_user.main_room
+    end
   end
 end
