@@ -111,7 +111,11 @@ class RoomsController < ApplicationController
         @join_name = params[@room.invite_path][:join_name]
       elsif !params[:join_name]
         # Join name not passed.
-        return redirect_to root_path
+        if !current_user.name.blank?
+          @join_name = current_user.name
+        else
+          return redirect_to root_path
+        end
       end
     end
 
