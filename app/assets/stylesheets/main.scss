@@ -30,7 +30,12 @@
 
 .background-image {
   background-image: url(asset_path('background.png'));
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
+  -webkit-animation: loader 200s steps(2000) infinite;
+  -moz-animation: loader 200s steps(2000) infinite;
+  -ms-animation: loader 200s steps(2000) infinite;
+  -o-animation: loader 200s steps(2000) infinite;
+  animation: loader 200s steps(2000) infinite;
 }
 
 .lead {
@@ -162,4 +167,46 @@
 
 .signin-button {
   font-size: 16px;
+}
+
+
+@-webkit-keyframes loader {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -1600px 0;
+  }
+}
+@-moz-keyframes loader {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -1600px 0;
+  }
+}
+@-ms-keyframes loader {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -1600px 0;
+  }
+}
+@-o-keyframes loader {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -1600px 0;
+  }
+}
+@keyframes loader {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: -1600px 0;
+  }
 }
