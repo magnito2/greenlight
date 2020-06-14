@@ -45,6 +45,11 @@ class RoomsController < ApplicationController
     # Create room
     @room = Room.new(name: room_params[:name], access_code: room_params[:access_code])
     @room.owner = current_user
+
+    #force mute_on_join and anyone_can_start
+    room_params[:mute_on_join] = "1"
+    room_params[:anyone_can_start] = "1"
+
     @room.room_settings = create_room_settings_string(room_params)
 
     @room.school = current_user.school if !current_user.school.blank?
@@ -272,7 +277,7 @@ class RoomsController < ApplicationController
     if !@room.nil?
       logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
     end
-    
+
     # Redirect the correct page.
     if current_user
       redirect_to current_user.main_room
