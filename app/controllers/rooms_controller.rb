@@ -68,8 +68,8 @@ class RoomsController < ApplicationController
     @room_running = room_running?(@room.bbb_id)
     @shared_room = room_shared_with_user
 
-    @school_rooms = current_user.school.rooms if !current_user.school.blank?
-    @school = current_user.school if !current_user.school.blank?
+    @school_rooms = current_user.school.rooms if current_user && !current_user.school.blank?
+    @school = current_user.school if current_user && !current_user.school.blank?
 
     # If its the current user's room
     if current_user && (@room.owned_by?(current_user) || @shared_room)
