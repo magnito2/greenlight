@@ -269,10 +269,16 @@ class RoomsController < ApplicationController
 
   # GET /:room_uid/logout
   def logout
-    logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
-
+    if !@room.nil?
+      logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
+    end
+    
     # Redirect the correct page.
-    redirect_to @room
+    if current_user
+      redirect_to current_user.main_room
+    else
+      redirect_to root_path
+    end
   end
 
   # POST /:room_uid/login
