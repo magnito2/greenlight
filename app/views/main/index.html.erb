@@ -24,12 +24,44 @@
     </div>
   </div>
 </div>
+<% if !@school.blank? %>
+<div class="container pt-9 pb-8">
+  <div class="row">
+    <div class="col-md-6 col-sm-12 offset-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3>Active classes</h3>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">
+            <% if !@active_rooms.blank? %>Active Rooms in <%= @school.name %>
+            <% else %> No class in currently ongoing, kindly refresh your browser after sometime <% end %>
+          </h3>
+          <% if !@active_rooms.blank? %>
+            <ul class="list-group w-75">
+                <% @active_rooms.each do |room| %>
+                    <%= link_to room_path(room), class: "list-group-item list-group-item-action dropdown-item"  do %>
+                        <%= room.name + " by " + room.owner.name %>
+                    <% end %>
+                <% end %>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    <div>
+  </div>
+</div>
+<% end %>
 <div class="container pt-3 pb-3">
   <div class="row pb-8">
-    <div class="col-md-8 col-sm-12">
-      <h1 class="display-5 mb-5 text-center">Our Mission</h1>
-      <p class="lead offset-lg-1 col-lg-12 col-sm-12 ">We had a dream, to create a class room for everyone, regardless of the geography. Recent events have made this mission even more critical!</p>
+    <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Our Mission</h3>
+        <p class="card-text">We had a dream, to create a class room for everyone, regardless of the geography. Recent events have made this mission even more critical!</p>
+      </div>
     </div>
+  </div>
   </div>
   <div class="row">
     <div class="col-md-8 offset-md-4 col-sm-12 text-center">
