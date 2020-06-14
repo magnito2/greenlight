@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-md-12 col-sm-12 text-center">
         <h1 id="main-text" class="display-4 mb-4">Welcome to Technology Quest</h1>
-        <p class="lead offset-lg-2 col-lg-8 col-sm-12 ">And get ready to continue the syllabus</p>
+        <p class="lead offset-lg-2 col-lg-8 col-sm-12 ">Keep on learning</p>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
         <div class="card-body">
           <h3 class="card-title">
             <% if !@active_rooms.blank? %>Active Rooms in <%= @school.name %>
-            <% else %> No class in currently ongoing, kindly refresh your browser after sometime <% end %>
+            <% else %> The is no class currently going on, you can refresh this tab after a few minutes to check again <% end %>
           </h3>
           <% if !@active_rooms.blank? %>
             <ul class="list-group w-75">
@@ -51,65 +51,5 @@
     <div>
   </div>
 </div>
+</div>
 <% end %>
-<div class="container pt-3 pb-3">
-  <div class="row pb-8">
-    <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">Our Mission</h3>
-        <p class="card-text">We had a dream, to create a class room for everyone, regardless of the geography. Recent events have made this mission even more critical!</p>
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 offset-md-4 col-sm-12 text-center">
-      <h1 class="display-5 mb-5">Who are we?</h1>
-      <p class="lead offset-lg-1 col-lg-12 col-sm-12 ">Led by Stella Maris Othaya Girls, we envision a learning environment for schools. </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 col-sm-12">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <%= image_tag("background/1.jpg", class: "d-block w-100", alt: "First slide") %>
-      <div class="carousel-caption d-none d-md-block">
-        <h4>Prepping for the D-Day?</h4>
-        <p>Get classes from home to ready for you the final exams</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <%= image_tag("background/4.jpg", class: "d-block w-100", alt: "Second slide") %>
-      <div class="carousel-caption d-none d-md-block">
-        <h4>Join with others</h4>
-        <p>Class work and discussions can now go on</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <%= image_tag("background/3.jpg", class: "d-block w-100", alt: "Third slide") %>
-      <div class="carousel-caption d-none d-md-block">
-        <h4>Watch the process</h4>
-        <p>The teacher is going to explain as he carries it out</p>
-      </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-    </div>
-  </div>
-</div>
-</div>
