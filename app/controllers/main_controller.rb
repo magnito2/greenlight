@@ -23,6 +23,9 @@ class MainController < ApplicationController
     # Store invite token
     session[:invite_token] = params[:invite_token] if params[:invite_token] && invite_registration
 
+    @school = School.find_by_name("Othaya Girls")
+    @active_rooms = @school.rooms.select { |room| room_running?(room.bbb_id)} if !@school.blank?
+
     if current_user
       return redirect_to current_user.main_room
     end
